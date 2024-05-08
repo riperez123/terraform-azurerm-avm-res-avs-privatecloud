@@ -42,10 +42,10 @@ module "naming" {
   version = "=0.4.0"
 }
 
-module "regions" {
-  source  = "Azure/regions/azurerm"
-  version = "=0.4.0"
-}
+#module "regions" {
+# source  = "Azure/regions/azurerm"
+# version = "=0.4.0"
+#}
 
 data "azurerm_client_config" "current" {}
 
@@ -194,6 +194,13 @@ module "test_private_cloud" {
       hcx_key_names    = ["example_key_1", "example_key_2"]
       hcx_license_type = "Enterprise"
     }
+  }
+
+  clusters = {
+  Cluster-2 = {
+  cluster_node_count = 3
+  sku_name           = jsondecode(local_file.region_sku_cache.content).sku
+  }
   }
 
   diagnostic_settings = {
